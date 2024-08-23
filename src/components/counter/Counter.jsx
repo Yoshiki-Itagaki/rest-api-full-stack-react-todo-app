@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PropTypes} from 'prop-types'
 import './Counter.css'
 
 export default function Counter({by}) {
@@ -6,12 +7,10 @@ export default function Counter({by}) {
     const [count, setCount ] = useState(0);
     
     function incrementCounterFunction() {
-        console.log('increment clicked');
         setCount(count+by);
     }
     
     function decrementCounterFunction() {
-        console.log('increment clicked');
         setCount(count-by);
     }
     
@@ -32,5 +31,12 @@ export default function Counter({by}) {
             </div>
            
         </div>
-    )
+    )   
+}
+
+Counter.propTypes = {
+    by: PropTypes.number,
+}
+Counter.defaultProps = {
+    by: 1
 }

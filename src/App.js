@@ -4,7 +4,7 @@ import Counter from './components/counter/Counter';
 export default function App() {
   return (
     <div className="App">
-       <Counter by={1}/>
+       <Counter/>
        <Counter by={2}/>
        <Counter by={5}/>
     </div>
