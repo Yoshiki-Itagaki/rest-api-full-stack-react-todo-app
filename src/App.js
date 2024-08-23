@@ -8,9 +8,4 @@ export default function App() {
     </div>
   )
 
-  function PlayingWithProps(){
-    return (
-      <div>Props</div>
-    )
-  }
 }
