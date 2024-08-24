@@ -20,12 +20,10 @@ export default function LoginComponent() {
 
     function handleSubmit() {
         if(username === 'in28minutes' && password === 'dummy' ){
-            console.log('success');
             setShowSuccessMessage(true);
             setShowErrorMessage(false);
             navigate(`/welcome/${username}`);
         } else {
-            console.log('failed');
             setShowSuccessMessage(false);
             setShowErrorMessage(true);
         }
