@@ -5,17 +5,20 @@ import './TodoApp.css'
 export default function TodoApp() {
     return (
         <div className='TodoApp'>
+            <HeaderComponent />
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<LoginComponent />} />
                     <Route path='/login' element={<LoginComponent />} />
                     <Route path='/welcome/:username' element={<WelcomeComponent />} />
                     <Route path='/todos' element={<ListTodosComponent />} />
+                    <Route path='/logout' element={<LogoutComponent />} />
 
                     <Route path='/*' element={<ErrorComponent />} />
 
                 </Routes>
             </BrowserRouter>
+            <FooterComponent />
         </div>
     )
 }
@@ -92,7 +95,7 @@ function WelcomeComponent() {
         <div> 
             <h1>Welcome {username}</h1>            
             <div className='WelcomeComponent'>
-                Manage Your Todos - <Link href='/todos'>Go Ahead</Link>
+                Manage Your Todos - <Link to='/todos'>Go Ahead</Link>
             </div>
 
         </div>
@@ -152,6 +155,33 @@ function ListTodosComponent() {
                         }
                     </tbody>
                 </table>
+            </div>
+        </div>
+    )
+}
+
+function HeaderComponent() {
+    return (
+        <div className='HeaderComponent'>
+            Header <hr />
+        </div>
+    )
+}
+
+function FooterComponent() {
+    return (
+        <div className='FooterComponent'>
+            <hr /> Footer
+        </div>
+    )
+}
+
+function LogoutComponent() {
+    return (
+        <div className='LogoutComponent'>
+            <h1>You are logged out!</h1>
+            <div>
+                Thank you for using our app. Come back soon.
             </div>
         </div>
     )
