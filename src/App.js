@@ -1,10 +1,10 @@
 import './App.css';
-import Counter from './components/counter/Counter';
+import TodoApp from './components/todo/TodoApp';
 
 export default function App() {
   return (
     <div className="App">
-      <Counter />
+      <TodoApp />
     </div>
   )
 
