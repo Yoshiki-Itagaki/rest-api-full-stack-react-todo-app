@@ -14,7 +14,7 @@ export default function WelcomeComponent() {
             .catch(error => {
                 errorResponse(error);
             })
-            .finall(() => {
+            .finally(() => {
                 console.log('cleanup');
             })
 
