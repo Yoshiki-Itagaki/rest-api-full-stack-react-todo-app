@@ -6,7 +6,7 @@ export default function ResetButton({reset}) {
     return (
         <div>
             <button onClick={resetCount}
-            className="resetButton"
+            className='resetButton'
             >
                 Reset
             </button>

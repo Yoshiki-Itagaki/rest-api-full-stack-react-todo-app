@@ -21,7 +21,7 @@ export default function Counter() {
 
     return (
         <>
-            <span className="totalCount">{count}</span>
+            <span className='totalCount'>{count}</span>
             <CounterButton by={1} 
                 increment={increment} 
                 decrement={decrement}/>

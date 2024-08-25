@@ -1,7 +1,7 @@
 export default function FooterComponent() {
     return (
         <footer className='footer'>
-            <div className="container">
+            <div className='container'>
                 Your Footer
             </div>
         </footer>
