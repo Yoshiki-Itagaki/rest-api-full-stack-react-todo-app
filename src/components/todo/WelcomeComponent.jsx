@@ -1,13 +1,27 @@
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
 
 export default function WelcomeComponent() {
 
     const {username} = useParams();
 
+    const [message, setMessage] = useState(null);
+
     function callHelloWorldRestApi(){
         console.log('called');
-        axios.get('http://localhost:8080/hello-world')
+        // axios.get('http://localhost:8080/hello-world')
+        //     .then(response => {
+        //         successfulResponse(response);
+        //     })
+        //     .catch(error => {
+        //         errorResponse(error);
+        //     })
+        //     .finally(() => {
+        //         console.log('cleanup');
+        //     })
+        
+        axios.get('http://localhost:8080/hello-world-bean')
             .then(response => {
                 successfulResponse(response);
             })
@@ -17,14 +31,18 @@ export default function WelcomeComponent() {
             .finally(() => {
                 console.log('cleanup');
             })
+        
+        
 
     }
 
     function successfulResponse(response){
         console.log(response);
+        setMessage(response.data.message);
     }
     function errorResponse(error){
         console.log(error);
+        setMessage(error.data);
     }
 
     return (
@@ -36,6 +54,7 @@ export default function WelcomeComponent() {
             <div>
                 <button className='btn btn-success m-5' onClick={callHelloWorldRestApi}>Call Hello World REST API</button>
             </div>
+            <div className='text-info'>{message}</div>
         </div>       
     )
 }
