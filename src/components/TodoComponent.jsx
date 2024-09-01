@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { retrieveTodoApi } from "./todo/api/TodoApiService";
+import { useNavigate, useParams } from "react-router-dom";
+import { retrieveTodoApi, updateTodoApi } from "./todo/api/TodoApiService";
 import { useAuth } from "./todo/security/AuthContext";
 import { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -10,6 +10,8 @@ export default function TodoComponent() {
     const [description, setDescription] = useState('');
     const [targetDate, setTargetDate] = useState(null);
     const authContext = useAuth();
+    const navigate = useNavigate();
+
     const username = authContext.username;
 
     useEffect(() => {
@@ -22,24 +24,35 @@ export default function TodoComponent() {
                 console.log(response.data);
                 setDescription(response.data.description);
                 setTargetDate(response.data.targetDate);
-                console.log(description);
-                console.log(targetDate);
             })
             .catch(error => {
-
+                console.log(error);
             })
 
     }
 
     function onSubmit(values){
-        console.log(values);
+        const todo = {
+            id: id,
+            username: username,
+            description: values.description,
+            targetDate: values.targetDate,
+            done: false,
+        }
+       
+        updateTodoApi(username, id, todo)
+            .then(response => {
+                setDescription(response.data.description);
+                setTargetDate(response.data.targetDate);
+                navigate('/todos');
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     function validate(values){
-        let errors = {
-            // description: 'Enter a valid description.',
-            // targetDate: 'Enter a valid target date.',
-        }
+        let errors = {};
 
         if(values.description.length<5){
             errors.description = 'Enter at least 5 characters.'
@@ -51,13 +64,6 @@ export default function TodoComponent() {
         if(new Date(values.targetDate) <= new Date()){
             errors.targetDate = 'Enter a date later than today.';
         }
-
-        console.log('validating', values);
-        console.log('no', values.targetDate <= new Date());
-        console.log(values.targetDate);
-        console.log(new Date());
-
-
 
         return errors;
     }
