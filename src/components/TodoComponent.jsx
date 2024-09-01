@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { retrieveTodoApi, updateTodoApi } from "./todo/api/TodoApiService";
+import { createTodoApi, retrieveTodoApi, updateTodoApi } from "./todo/api/TodoApiService";
 import { useAuth } from "./todo/security/AuthContext";
 import { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import moment from 'moment'
 
 export default function TodoComponent() {
 
@@ -19,16 +20,18 @@ export default function TodoComponent() {
     }, [id])
 
     function retrieveTodos(){
-        retrieveTodoApi(username, id)
-            .then(response => {
-                console.log(response.data);
-                setDescription(response.data.description);
-                setTargetDate(response.data.targetDate);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
+        console.log('type', typeof id);
+        if(id != -1){
+            retrieveTodoApi(username, id)
+                .then(response => {
+                    console.log(response.data);
+                    setDescription(response.data.description);
+                    setTargetDate(response.data.targetDate);
+                })
+                .catch(error => {
+                    console.log(error);
+                })    
+        }
     }
 
     function onSubmit(values){
@@ -40,25 +43,37 @@ export default function TodoComponent() {
             done: false,
         }
        
-        updateTodoApi(username, id, todo)
-            .then(response => {
-                setDescription(response.data.description);
-                setTargetDate(response.data.targetDate);
-                navigate('/todos');
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        if(id == -1){
+            updateTodoApi(username, id, todo)
+                .then(response => {
+                    setDescription(response.data.description);
+                    setTargetDate(response.data.targetDate);
+                    navigate('/todos');
+                })
+                .catch(error => {
+                    console.log(error);
+                })            
+        } else {
+            createTodoApi(username, todo)
+                .then(response => {
+                    setDescription(response.data.description);
+                    setTargetDate(response.data.targetDate);
+                    navigate('/todos');
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     function validate(values){
         let errors = {};
 
-        if(values.description.length<5){
+        if(values.description.length < 5){
             errors.description = 'Enter at least 5 characters.'
         }
 
-        if(!values.targetDate){
+        if(!values.targetDate || values.targetDate === '' || !moment(values.targetDate).isValid()){
             errors.targetDate = 'Enter a target date.'
         }
         if(new Date(values.targetDate) <= new Date()){
@@ -102,7 +117,7 @@ export default function TodoComponent() {
                                 <Field type="date" className="form-control" name="targetDate"/>
                             </fieldset>
                             <div>
-                                <button className="btn btn-success" type="submit">Save</button>
+                                <button className="btn btn-success m-5" type="submit">Save</button>
                             </div>
                         </Form>
                     )
