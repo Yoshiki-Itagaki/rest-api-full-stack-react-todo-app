@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from './security/AuthContext';
 
 export default function LoginComponent() {
+    
 
     const [username, setUsername] = useState('in28minutes');
     const [password, setPassword] = useState('');
