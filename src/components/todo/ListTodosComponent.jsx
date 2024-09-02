@@ -80,7 +80,7 @@ export default function ListTodosComponent() {
                                 return (
                                 <tr key={todo.id}>
                                     <td>{todo.description}</td>    
-                                    <td>{todo.done}</td>    
+                                    <td>{todo.done.toString()}</td>    
                                     <td>{todo.targetDate}</td>    
                                     <td>
                                         <button className="btn btn-warning" onClick={() => deleteTodo(todo.id)}>

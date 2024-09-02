@@ -20,11 +20,9 @@ export default function TodoComponent() {
     }, [id])
 
     function retrieveTodos(){
-        console.log('type', typeof id);
         if(id != -1){
             retrieveTodoApi(username, id)
                 .then(response => {
-                    console.log(response.data);
                     setDescription(response.data.description);
                     setTargetDate(response.data.targetDate);
                 })
@@ -44,6 +42,17 @@ export default function TodoComponent() {
         }
        
         if(id == -1){
+            createTodoApi(username, todo)
+            .then(response => {
+                setDescription(response.data.description);
+                setTargetDate(response.data.targetDate);
+                navigate('/todos');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+                  
+        } else {
             updateTodoApi(username, id, todo)
                 .then(response => {
                     setDescription(response.data.description);
@@ -52,17 +61,7 @@ export default function TodoComponent() {
                 })
                 .catch(error => {
                     console.log(error);
-                })            
-        } else {
-            createTodoApi(username, todo)
-                .then(response => {
-                    setDescription(response.data.description);
-                    setTargetDate(response.data.targetDate);
-                    navigate('/todos');
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                })     
         }
     }
 
